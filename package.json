@@ -4,8 +4,8 @@
   "license": "MIT",
   "scripts": {
     "watch": "yarn watch-client & yarn watch-api",
-    "watch-api": "node src/api.js",
-    "watch-client": "yarn poi src/client.js --serve"
+    "watch-api": "nodemon src/api",
+    "watch-client": "yarn poi src/client --serve"
   },
   "devDependencies": {
     "cors": "^2.8.5",
@@ -15,5 +15,11 @@
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-fetch-hook": "^1.7.1"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.12.3",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.60",
+    "nodemon": "^2.0.14"
   }
 }
