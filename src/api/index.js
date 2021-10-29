@@ -32,7 +32,7 @@ const createGrid = () => {
 
 
 app.get('/api/draw-path', (req, res) => {
-    const input = req.body.input
+    const input = req.body.input.split('')
     let grid = createGrid()
     let current_x = ORIGIN_X
     let current_y = ORIGIN_Y
@@ -70,7 +70,7 @@ app.get('/api/draw-path', (req, res) => {
             grid[current_x][current_y] = TAKE_PHOTO
         }
     }
-    return grid
+    return res.json(grid)
 });
 
 app.listen(4001, () => console.log(`Api started at http://localhost:4001`));
