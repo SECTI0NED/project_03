@@ -2,19 +2,21 @@ const constants = require("./constants")
 const express = require('express');
 const app = express();
 const cors = require('cors');
+
 const path = require('path');
-const { ORIGIN_X, ORIGIN_Y, PATH } = require("./constants");
+
+const consts = require("./constants");
 const {getBillboardsPhotographed, drawPath, createGrid} = require("./utils")
 app.use(cors());
+app.use(express.json())
 
 app.get('/api/get-result', (req, res) => {
-    const input = req.body.input.split('')
+    // console.log(req.query)
+    const input = req.query.input.split('')
     let grid = createGrid()
-    let current_x = ORIGIN_X
-    let current_y = ORIGIN_Y
 
     // Draw the starting position
-    grid[current_y][current_x] = {key: {x: current_x, y: current_y}, item: PATH}
+    grid[consts.ORIGIN_Y][consts.ORIGIN_X].item = consts.PATH
 
     // Draw the path
     grid = drawPath(input, grid)
