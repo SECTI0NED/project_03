@@ -1,7 +1,8 @@
 import React, {useState} from 'react'
 import { GridArea } from '../GridArea'
-import {TextField} from "@material-ui/core"
+import {Divider, TextField} from "@material-ui/core"
 import { Grid } from '@material-ui/core'
+import { useGlobalStyles } from '../../styles/Global'
 
 
 export const App = () => {
@@ -10,9 +11,16 @@ export const App = () => {
     for(let i = 0; i < grid.length; i++){
         grid[i] = new Array(21)
     }
+
     for(let row = 0; row < grid.length; row++){
         for(let col = 0; col < grid[row].length; col++){
-            grid[row][col] = ""
+            grid[row][col] = {key: {x: col, y: row}, item: ""}
+        }
+    }
+
+    for(let row = 0; row < grid.length; row++){
+        for(let col = 0; col < grid[row].length; col++){
+            console.log(grid[row][col].key)
         }
     }
     return grid
@@ -20,16 +28,18 @@ export const App = () => {
     const [data, setData] = useState(getGridData)
     const [input, setInput] = useState("")
 
+    const global = useGlobalStyles()
+
     return (
-        <div>
-            <Grid container direction="col" justifyContent="center" style={{width: 1000}}>
-                <Grid item>
-                <GridArea data={data}/>
-                </Grid>
-                <Grid item style={{width: "100%"}}>
-                <TextField variant="filled" label="INPUT" style={{width: "100%"}}></TextField>
-                </Grid>
+        <div style={{padding: 50}}> 
+        <Grid container direction="row" justifyContent="flex-start">
+            <Grid item style={{ padding: "0px 20px 20px 0px"}}>
+            <GridArea data={data}/>
             </Grid>
+            <Grid item>
+                <TextField variant="filled" label="INPUT" style={{width: 700}}></TextField>
+            </Grid>
+        </Grid>
         </div>
     )
 }
