@@ -3,11 +3,11 @@ import { GridArea } from '../GridArea'
 import {CssBaseline, Divider, TextField, Typography} from "@material-ui/core"
 import { Grid } from '@material-ui/core'
 import { useGlobalStyles } from '../../styles/Global'
-import {MAX_HEIGHT, MAX_WIDTH, ORIGIN_X, ORIGIN_Y} from "../../constants"
+import {MAX_HEIGHT, MAX_WIDTH, ORIGIN_X, ORIGIN_Y, TAKE_PHOTO, UP, DOWN, LEFT, RIGHT} from "../../constants"
 import { Button } from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/styles'
 import {theme} from "../../styles/Theme"
-import { getData } from '../../services'
+import { getData, getInitialGrid } from '../../services'
 
 export const App = () => {
     // Styles
@@ -29,6 +29,8 @@ export const App = () => {
         grid[ORIGIN_Y][ORIGIN_X].item = "s"
         return grid
     }
+
+    const [error, setError] = useState({error: false, message: ""})
     const [data, setData] = useState(initGridData)
     const [amountOfBillboards, setAmountOfBillboards] = useState(0)
 
@@ -38,12 +40,25 @@ export const App = () => {
         setInput(event.target.value)
     }
 
+
     // Handle submitting and receiving data
-    const handleSubmit = async () => {
+    const sanitisedInput = (input) => {
         if(!input) return
+        input = input.trim()
+        for(const c of input){
+            if(c !== UP && c !== DOWN && c !== RIGHT && c !== LEFT && c !== TAKE_PHOTO){
+                setError({error: true, message: "Invalid input (^ v > < x)"})
+                setInput("")
+                return
+            }
+        }
+    }
+
+    const handleSubmit = async () => {
+        const sanitised = sanitisedInput(input)
+        if(!sanitised) return
         try{
-            console.log(input)
-            const res = await getData(input)
+            const res = await getData(sanitised)
             setData(res.data.grid)
             setAmountOfBillboards(res.data.amount)
         } catch(e) {

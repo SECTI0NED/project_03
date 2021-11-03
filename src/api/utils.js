@@ -1,5 +1,7 @@
 const consts = require("./constants");
 
+
+
 module.exports.createGrid = () => {
     let grid = new Array(consts.MAX_HEIGHT)
     for(let i = 0; i < grid.length; i++) {
@@ -13,6 +15,8 @@ module.exports.createGrid = () => {
     return grid
 }
 
+
+
 module.exports.getBillboardsPhotographed = (grid) => {
     let billboardsPhotographed = 0
     for(let row = 0; row < grid.length; row++){
@@ -25,8 +29,13 @@ module.exports.getBillboardsPhotographed = (grid) => {
     return billboardsPhotographed
 }
 
+/**
+ * Draws a path based on the input and an intialised grid
+ * @param {String} input 
+ * @param {String[][]} grid 
+ * @returns The grid with the path 
+ */
 module.exports.drawPath = (input, grid) => {
-    console.log(input)
     let x = consts.ORIGIN_X
     let y = consts.ORIGIN_Y
     for(let i = 0; i < input.length; i++){
@@ -55,6 +64,5 @@ module.exports.drawPath = (input, grid) => {
             grid[y][x].item = consts.TAKE_PHOTO
         }
     }
-    // console.log(grid)
     return grid
 }

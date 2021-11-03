@@ -8,7 +8,13 @@ const path = require('path');
 const consts = require("./constants");
 const {getBillboardsPhotographed, drawPath, createGrid} = require("./utils")
 app.use(cors());
+
 app.use(express.json())
+
+app.get('/api/initial-grid', (req, res) => {
+    let grid = createGrid()
+    return grid
+})
 
 app.get('/api/get-result', (req, res) => {
     // console.log(req.query)
