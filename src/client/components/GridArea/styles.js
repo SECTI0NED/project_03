@@ -7,4 +7,19 @@ export const useStyles = makeStyles(() => ({
         height: 40,
         width: 40,
     },
+    start: {
+        backgroundColor: "green",
+        height: 38,
+        width: 38,
+    },
+    path: {
+        backgroundColor: "blue",
+        height: 38,
+        width: 38,
+    },
+    photographed: {
+        backgroundColor: "yellow",
+        height: 38,
+        width: 38,
+    }
 }))

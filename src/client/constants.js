@@ -9,3 +9,4 @@ export const RIGHT = ">"
 export const TAKE_PHOTO = "x"
 export const EMPTY = ""
 export const PATH = "o"
+export const START = 's'

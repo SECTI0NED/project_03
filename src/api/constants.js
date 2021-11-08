@@ -10,4 +10,5 @@ module.exports = Object.freeze({
     TAKE_PHOTO : "x",
     EMPTY : "",
     PATH : "o",
+    START: 's'
 })

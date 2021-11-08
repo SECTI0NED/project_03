@@ -22,15 +22,15 @@ app.get('/api/get-result', (req, res) => {
     let grid = createGrid()
 
     // Draw the starting position
-    grid[consts.ORIGIN_Y][consts.ORIGIN_X].item = consts.PATH
+    grid[consts.ORIGIN_Y][consts.ORIGIN_X].item = consts.START
 
     // Draw the path
-    grid = drawPath(input, grid)
+    result = drawPath(input, grid)
 
     // Get number of billboards photographed at least once
-    const amount = getBillboardsPhotographed(grid)
+    const amount = getBillboardsPhotographed(result.grid)
     
-    return res.json({grid: grid, amount: amount})
+    return res.json({grid: result.grid, amount: amount, currentPos: result.currentPosition})
 });
 
 app.listen(4001, () => console.log(`Api started at http://localhost:4001`));
