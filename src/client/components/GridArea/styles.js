@@ -8,17 +8,17 @@ export const useStyles = makeStyles(() => ({
         width: 40,
     },
     start: {
-        backgroundColor: "green",
+        backgroundColor: "#32a852",
         height: 38,
         width: 38,
     },
     path: {
-        backgroundColor: "blue",
+        backgroundColor: "#3271a8",
         height: 38,
         width: 38,
     },
     photographed: {
-        backgroundColor: "yellow",
+        backgroundColor: "#a83252",
         height: 38,
         width: 38,
     }

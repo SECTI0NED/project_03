@@ -1,28 +1,29 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import { GridArea } from '../GridArea'
 import {CssBaseline, Divider, TextField, Typography} from "@material-ui/core"
 import { Grid } from '@material-ui/core'
 import { useGlobalStyles } from '../../styles/Global'
-import { useApp } from './useApp'
+import { useApp } from './hooks/useApp'
 import { Button } from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/styles'
 import {theme} from "../../styles/Theme"
 import { ErrorDialog } from './ErrorDialog'
-
+import { CurrentPositionContext } from '../../context/CurrentPositionContext'
 export const App = () => {
     // Styles
     const global = useGlobalStyles()
-
-    const {handleInputChange, handleSubmit, data, input, amountOfBillboards, error, closeError, currentPos} = useApp()
-
+    const {setPosition} = useContext(CurrentPositionContext)
+    const {handleInputChange, handleSubmit, data, input, amountOfBillboards, error, closeError} = useApp(setPosition)
+   
     return (
-        <ThemeProvider theme={theme}>
+        
+            <ThemeProvider theme={theme}>
             <CssBaseline />
             <div style={{padding: 50}}> 
                 <ErrorDialog error={error} closeError={closeError}/>
                 <Grid container direction="row" justifyContent="flex-start">
                 <Grid item style={{ padding: "0px 20px 20px 0px"}}>
-                <GridArea data={data} currentPos={currentPos}/>
+                <GridArea data={data}/>
                 </Grid>
                 <Grid item>
                     <Grid container direction="column" spacing={4} justifyContent="center">
@@ -47,5 +48,6 @@ export const App = () => {
                 </Grid>
             </div>
         </ThemeProvider>
+       
     )
 }

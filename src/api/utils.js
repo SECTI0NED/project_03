@@ -1,3 +1,4 @@
+const { ContactSupportOutlined } = require("@material-ui/icons");
 const consts = require("./constants");
 
 module.exports.createGrid = () => {
@@ -60,5 +61,6 @@ module.exports.drawPath = (input, grid) => {
             grid[y][x].item = consts.TAKE_PHOTO
         }
     }
-    return {grid: grid, currentPos: {x: x, y: y}}
+
+    return {grid: grid, currentPosition: {x: x, y: y}}
 }

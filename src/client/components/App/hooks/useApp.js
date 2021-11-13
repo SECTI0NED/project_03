@@ -1,8 +1,10 @@
-import React, {useState} from 'react'
-import {MAX_HEIGHT, MAX_WIDTH, ORIGIN_X, ORIGIN_Y, TAKE_PHOTO, UP, DOWN, LEFT, RIGHT, START} from "../../constants"
-import { getData } from '../../services'
+import React, {useState, useContext} from 'react'
+import {MAX_HEIGHT, MAX_WIDTH, ORIGIN_X, ORIGIN_Y, TAKE_PHOTO, UP, DOWN, LEFT, RIGHT, START} from "../../../constants"
+import { CurrentPositionProvider } from '../../../context/CurrentPositionContext'
+import { getData } from '../../../services'
 
-export const useApp = () => {
+export const useApp = (setPosition) => {
+
     // Grid Data
     const initGridData = () => {
         let grid = new Array(MAX_HEIGHT)
@@ -20,13 +22,10 @@ export const useApp = () => {
         return grid
     }
 
-    const [error, setError] = useState({error: false, message: ""})
-    const closeError = () => {
-        setError({error: false, message: ""})
-    }
+    // Data
     const [data, setData] = useState(initGridData)
     const [amountOfBillboards, setAmountOfBillboards] = useState(0)
-    const [currentPos, setCurrentPos] = useState({x: ORIGIN_X, y: ORIGIN_Y})
+    
 
     // Handling Input
     const [input, setInput] = useState("")
@@ -37,7 +36,6 @@ export const useApp = () => {
 
     // Handle submitting and receiving data
     const sanitisedInput = (input) => {
-        console.log(input)
         if(!input) return
         input = input.trim()
         for(const c of input){
@@ -50,6 +48,14 @@ export const useApp = () => {
         return input
     }
 
+    // Error display
+    const [error, setError] = useState({error: false, message: ""})
+    const closeError = () => {
+        setError({error: false, message: ""})
+    }
+
+
+    // Handle submit
     const handleSubmit = async () => {
         const sanitised = sanitisedInput(input)
         if(!sanitised) return
@@ -57,12 +63,11 @@ export const useApp = () => {
             const res = await getData(sanitised)
             setData(res.data.grid)
             setAmountOfBillboards(res.data.amount)
-            setCurrentPos(res.data.currentPos)
-            console.log("submitted")
+            setPosition(res.data.currentPosition)
         } catch(e) {
             console.log(e)
         }
     }
 
-    return {handleInputChange, handleSubmit, data, input, error, closeError, amountOfBillboards, currentPos}
+    return {handleInputChange, handleSubmit, data, input, error, closeError, amountOfBillboards}
 }
