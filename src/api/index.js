@@ -30,7 +30,7 @@ app.get('/api/get-result', (req, res) => {
     // Get number of billboards photographed at least once
     const amount = getBillboardsPhotographed(result.grid)
     
-    return res.json({grid: result.grid, amount: amount, currentPosition: result.currentPosition})
+    return res.json({grid: result.grid, amount: amount, currentPosition: result.currentPosition, orientation: result.orientation})
 });
 
 app.listen(4001, () => console.log(`Api started at http://localhost:4001`));

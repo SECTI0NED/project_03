@@ -1,9 +1,8 @@
 import React, {useState, useContext} from 'react'
 import {MAX_HEIGHT, MAX_WIDTH, ORIGIN_X, ORIGIN_Y, TAKE_PHOTO, UP, DOWN, LEFT, RIGHT, START} from "../../../constants"
-import { CurrentPositionProvider } from '../../../context/CurrentPositionContext'
 import { getData } from '../../../services'
 
-export const useApp = (setPosition) => {
+export const useApp = (setPose) => {
 
     // Grid Data
     const initGridData = () => {
@@ -63,7 +62,7 @@ export const useApp = (setPosition) => {
             const res = await getData(sanitised)
             setData(res.data.grid)
             setAmountOfBillboards(res.data.amount)
-            setPosition(res.data.currentPosition)
+            setPose({position: res.data.currentPosition, orientation: res.data.orientation})
         } catch(e) {
             console.log(e)
         }

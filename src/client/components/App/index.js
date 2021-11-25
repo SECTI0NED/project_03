@@ -8,12 +8,12 @@ import { Button } from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/styles'
 import {theme} from "../../styles/Theme"
 import { ErrorDialog } from './ErrorDialog'
-import { CurrentPositionContext } from '../../context/CurrentPositionContext'
+import { CurrentPoseContext } from '../../context/CurrentPoseContext'
 export const App = () => {
     // Styles
     const global = useGlobalStyles()
-    const {setPosition} = useContext(CurrentPositionContext)
-    const {handleInputChange, handleSubmit, data, input, amountOfBillboards, error, closeError} = useApp(setPosition)
+    const {setPose} = useContext(CurrentPoseContext)
+    const {handleInputChange, handleSubmit, data, input, amountOfBillboards, error, closeError} = useApp(setPose)
    
     return (
         

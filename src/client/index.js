@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {App} from "./components/App"
-import { CurrentPositionProvider } from "./context/CurrentPositionContext"
+import { CurrentPoseProvider } from "./context/CurrentPoseContext"
 
 ReactDOM.render(
-    <CurrentPositionProvider>
+    <CurrentPoseProvider>
         <App />
-    </CurrentPositionProvider>, 
+    </CurrentPoseProvider>, 
 document.getElementById('app'));

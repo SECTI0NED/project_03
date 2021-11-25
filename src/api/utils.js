@@ -1,4 +1,5 @@
 const { ContactSupportOutlined } = require("@material-ui/icons");
+const { MAX_WIDTH } = require("./constants");
 const consts = require("./constants");
 
 module.exports.createGrid = () => {
@@ -33,27 +34,36 @@ module.exports.getBillboardsPhotographed = (grid) => {
  * @returns The grid with the path, along with the current position
  */
 module.exports.drawPath = (input, grid) => {
+    let orientation = consts.UP
     let x = consts.ORIGIN_X
     let y = consts.ORIGIN_Y
     for(let i = 0; i < input.length; i++){
         if(input[i] === consts.UP){
             y -= 1
+            if(outOfBounds(x, y)) return
+            orientation = consts.UP
             if(grid[y][x].item === consts.EMPTY){
                 grid[y][x].item = consts.PATH
             }
         } else if(input[i] === consts.RIGHT){
             x += 1
+            if(outOfBounds(x, y)) return
+            orientation = consts.RIGHT
             if(grid[y][x].item === consts.EMPTY){
                 grid[y][x].item = consts.PATH
             }
         } else if(input[i] === consts.DOWN) {
             y += 1
+            if(outOfBounds(x, y)) return
+            orientation = consts.DOWN
             if(grid[y][x].item === consts.EMPTY){
                 grid[y][x].item = consts.PATH
             }
 
         } else if(input[i] === consts.LEFT) {
             x -= 1
+            if(outOfBounds(x, y)) return
+            orientation = consts.LEFT
             if(grid[y][x].item === consts.EMPTY){
                 grid[y][x].item = consts.PATH
             }
@@ -62,5 +72,12 @@ module.exports.drawPath = (input, grid) => {
         }
     }
 
-    return {grid: grid, currentPosition: {x: x, y: y}}
+    return {grid: grid, currentPosition: {x: x, y: y}, orientation: orientation}
+}
+
+const outOfBounds = (x, y) => {
+    if(y < 0 || y > consts.MAX_HEIGHT || x < 0 || x > consts.MAX_WIDTH) {
+        return true
+    }
+    return false
 }
