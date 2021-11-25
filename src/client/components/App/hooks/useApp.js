@@ -39,7 +39,7 @@ export const useApp = (setPose) => {
         input = input.trim()
         for(const c of input){
             if(c !== UP && c !== DOWN && c !== RIGHT && c !== LEFT && c !== TAKE_PHOTO){
-                setError({error: true, message: "Invalid input (^ v > < x)"})
+                setError({error: true, message: "Error: Invalid input"})
                 setInput("")
                 return
             }
@@ -65,6 +65,10 @@ export const useApp = (setPose) => {
             setPose({position: res.data.currentPosition, orientation: res.data.orientation})
         } catch(e) {
             console.log(e)
+            if(e.response.status === 400){
+                setError({error: true, message: "Error: Input extends boundaries of the grid."})
+                setInput("")
+            }
         }
     }
 

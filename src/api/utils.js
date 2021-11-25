@@ -76,7 +76,7 @@ module.exports.drawPath = (input, grid) => {
 }
 
 const outOfBounds = (x, y) => {
-    if(y < 0 || y > consts.MAX_HEIGHT || x < 0 || x > consts.MAX_WIDTH) {
+    if(y < 0 || y >= consts.MAX_HEIGHT || x < 0 || x >= consts.MAX_WIDTH) {
         return true
     }
     return false
