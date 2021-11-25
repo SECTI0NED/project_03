@@ -2,9 +2,6 @@ const constants = require("./constants")
 const express = require('express');
 const app = express();
 const cors = require('cors');
-
-const path = require('path');
-
 const consts = require("./constants");
 const {getBillboardsPhotographed, drawPath, createGrid} = require("./utils")
 app.use(cors());
@@ -26,6 +23,9 @@ app.get('/api/get-result', (req, res) => {
 
     // Draw the path
     result = drawPath(input, grid)
+
+    // If the input is out of bounds then return an error status code
+    if(!result) return res.sendStatus(400)
 
     // Get number of billboards photographed at least once
     const amount = getBillboardsPhotographed(result.grid)
