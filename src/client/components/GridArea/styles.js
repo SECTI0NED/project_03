@@ -8,7 +8,7 @@ export const useStyles = makeStyles(() => ({
         width: 40,
     },
     start: {
-        backgroundColor: "#32a852",
+        backgroundColor: "#a8a8a8",
         height: 38,
         width: 38,
     },
@@ -32,11 +32,11 @@ export const useStyles = makeStyles(() => ({
             backgroundColor: "rgba(0,0,0,0.0)",
         },
         to: {
-            backgroundColor: "#a83252",
+            backgroundColor: "#2554a1",
         },
     },
     photographed: {
-        backgroundColor: "#a83252",
+        backgroundColor: "#2554a1",
         height: 38,
         width: 38,
         animationName: "$photo",

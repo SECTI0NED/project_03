@@ -56,6 +56,7 @@ export const useApp = (setPose) => {
 
     // Handle submit
     const handleSubmit = async () => {
+        setData(initGridData)
         const sanitised = sanitisedInput(input)
         if(!sanitised) return
         try{
@@ -67,7 +68,6 @@ export const useApp = (setPose) => {
             console.log(e)
             if(e.response.status === 400){
                 setError({error: true, message: "Error: Input extends boundaries of the grid."})
-                setInput("")
             }
         }
     }
