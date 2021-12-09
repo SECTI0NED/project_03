@@ -9,6 +9,9 @@ export const theme = createTheme({
         primary: {  
             main: "#558be0"
         },
+        error: {
+            main: "#ad4040"
+        },
         typography: {
             color: "white"
         }

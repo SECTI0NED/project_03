@@ -2,7 +2,7 @@ import React, {useState, useContext} from 'react'
 import {MAX_HEIGHT, MAX_WIDTH, ORIGIN_X, ORIGIN_Y, TAKE_PHOTO, UP, DOWN, LEFT, RIGHT, START} from "../../../constants"
 import { getData } from '../../../services'
 
-export const useApp = (setPose) => {
+export const useApp = (setFirstPose) => {
 
     // Grid Data
     const initGridData = () => {
@@ -22,7 +22,7 @@ export const useApp = (setPose) => {
     }
 
     // Data
-    const [data, setData] = useState(initGridData)
+    const [gridData, setGridData] = useState(initGridData)
     const [amountOfBillboards, setAmountOfBillboards] = useState(0)
     
 
@@ -30,6 +30,9 @@ export const useApp = (setPose) => {
     const [input, setInput] = useState("")
     const handleInputChange = (event) => {
         setInput(event.target.value)
+    }
+    const handleButtonInput = (event) => {
+        setInput(input + event.currentTarget.value)
     }
 
 
@@ -40,7 +43,6 @@ export const useApp = (setPose) => {
         for(const c of input){
             if(c !== UP && c !== DOWN && c !== RIGHT && c !== LEFT && c !== TAKE_PHOTO){
                 setError({error: true, message: "Error: Invalid input"})
-                setInput("")
                 return
             }
         }
@@ -53,17 +55,23 @@ export const useApp = (setPose) => {
         setError({error: false, message: ""})
     }
 
+    const handleClear = () => {
+        // Rest the input field and grid
+        setInput("")
+        setGridData(initGridData)
+        setFirstPose({position: {x: ORIGIN_X, y: ORIGIN_Y}, orientation: UP})
+    }
 
     // Handle submit
     const handleSubmit = async () => {
-        setData(initGridData)
         const sanitised = sanitisedInput(input)
         if(!sanitised) return
+        setGridData(initGridData)
         try{
             const res = await getData(sanitised)
-            setData(res.data.grid)
+            setGridData(res.data.grid)
             setAmountOfBillboards(res.data.amount)
-            setPose({position: res.data.currentPosition, orientation: res.data.orientation})
+            setFirstPose({position: res.data.currentPosition, orientation: res.data.orientation})
         } catch(e) {
             console.log(e)
             if(e.response.status === 400){
@@ -72,5 +80,5 @@ export const useApp = (setPose) => {
         }
     }
 
-    return {handleInputChange, handleSubmit, data, input, error, closeError, amountOfBillboards}
+    return {handleInputChange, handleSubmit, gridData, input, error, closeError, amountOfBillboards, handleButtonInput, handleClear}
 }

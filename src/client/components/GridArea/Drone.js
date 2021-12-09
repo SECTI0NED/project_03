@@ -3,10 +3,9 @@ import FlightIcon from '@material-ui/icons/Flight';
 import { CurrentPoseContext } from "../../context/CurrentPoseContext";
 import {UP, RIGHT, DOWN, LEFT} from "../../constants"
 import { useStyles } from './styles';
-export const Drone = () => {
-    
+export const Drone = ({pose}) => {
     const classes = useStyles()
-    const {pose} = useContext(CurrentPoseContext)
+
     if(pose.orientation === UP){
         return <FlightIcon style={{ transform: "rotate(0deg)"}} className={classes.drone} />
     }

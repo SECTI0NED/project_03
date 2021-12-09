@@ -5,22 +5,22 @@ import { useStyles } from "./styles"
 import { Tooltip } from "@material-ui/core";
 import { CurrentPoseContext } from "../../context/CurrentPoseContext";
 import { Drone } from "./Drone";
-export const Square = ({data}) => {
-    const {pose} = useContext(CurrentPoseContext)
+export const Square = ({gridData}) => {
+    const {firstPose} = useContext(CurrentPoseContext)
     const classes = useStyles()
  
     return (
         <>
-        <Tooltip title={data.item !== START && data.item !== TAKE_PHOTO ?`(${data.key.x}, ${data.key.y})`: ""}>
+        <Tooltip title={gridData.item !== START && gridData.item !== TAKE_PHOTO ? `(${gridData.key.x}, ${gridData.key.y})`: ""}>
         <div className={classes.square}>
             {
-                data.item === PATH
+                gridData.item === PATH
                 ?
                 <div className={classes.path}>
                     {
-                        data.key.x === pose.position.x && data.key.y === pose.position.y
+                        gridData.key.x === firstPose.position.x && gridData.key.y === firstPose.position.y
                         ?
-                        <Drone />
+                        <Drone pose={firstPose}/>
                         :
                         <></>
                     }
@@ -29,14 +29,14 @@ export const Square = ({data}) => {
                 <></>
             }
             {
-                data.item === TAKE_PHOTO
+                gridData.item === TAKE_PHOTO
                 ?
-                <Tooltip title={`Photographed (${data.key.x}, ${data.key.y})`}>
+                <Tooltip title={`Photographed (${gridData.key.x}, ${gridData.key.y})`}>
                 <div className={classes.photographed}>
                     {
-                        data.key.x === pose.position.x && data.key.y === pose.position.y
+                        gridData.key.x === firstPose.position.x && gridData.key.y === firstPose.position.y
                         ?
-                         <Drone />
+                        <Drone pose={firstPose}/>
                         :
                         <></>
                     }
@@ -46,14 +46,14 @@ export const Square = ({data}) => {
                 <></>
             }
             {
-                data.item === START
+                gridData.item === START
                 ?
-                <Tooltip title={`Start (${data.key.x}, ${data.key.y})`}>
+                <Tooltip title={`Start (${gridData.key.x}, ${gridData.key.y})`}>
                 <div className={classes.start}>
                     {
-                        data.key.x === pose.position.x && data.key.y === pose.position.y
+                        gridData.key.x === firstPose.position.x && gridData.key.y === firstPose.position.y
                         ?
-                         <Drone />
+                        <Drone pose={firstPose}/>
                         :
                         <></>
                     }
