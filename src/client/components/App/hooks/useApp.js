@@ -28,6 +28,7 @@ export const useApp = (setFirstPose) => {
 
     // Handling Input
     const [input, setInput] = useState("")
+
     const handleInputChange = (event) => {
         setInput(event.target.value)
     }
@@ -55,26 +56,42 @@ export const useApp = (setFirstPose) => {
         setError({error: false, message: ""})
     }
 
+    // For error handling - this variable keeps the most recent valid input
+    const [inputCopy, setInputCopy] = useState("")
+    const [gridDataCopy, setGridDataCopy] = useState(initGridData)
+
     const handleClear = () => {
-        // Rest the input field and grid
+        // Reset the input field, grid and number of billboards photographed
         setInput("")
         setGridData(initGridData)
         setFirstPose({position: {x: ORIGIN_X, y: ORIGIN_Y}, orientation: UP})
+        setAmountOfBillboards(0)
     }
 
     // Handle submit
     const handleSubmit = async () => {
         const sanitised = sanitisedInput(input)
         if(!sanitised) return
-        setGridData(initGridData)
+       
         try{
             const res = await getData(sanitised)
+
+            // Reset the grid before drawing the path
+            setGridData(initGridData)
+
+            // Draw the path
             setGridData(res.data.grid)
+
             setAmountOfBillboards(res.data.amount)
             setFirstPose({position: res.data.currentPosition, orientation: res.data.orientation})
+            setGridDataCopy(res.data.grid)
+            setInputCopy(input)
+
         } catch(e) {
             console.log(e)
             if(e.response.status === 400){
+                setGridData(gridDataCopy)
+                setInput(inputCopy)
                 setError({error: true, message: "Error: Input extends boundaries of the grid."})
             }
         }

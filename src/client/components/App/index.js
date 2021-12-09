@@ -35,7 +35,7 @@ export const App = () => {
                             <ValidInputPanel handleButtonInput={handleButtonInput}/>
                         </Grid>
                         <Grid item>
-                            <TextField 
+                            <TextField
                                 variant="filled" 
                                 label="INPUT" 
                                 style={{width: 700}}
@@ -50,8 +50,12 @@ export const App = () => {
                                 <Button variant="contained" color="primary" onClick={handleSubmit}>Submit</Button>
                             </Grid>
                         </Grid>
+                        <Divider />
                         <Grid item>
-                            <Typography>Number of billboards photographed at least once: {amountOfBillboards}</Typography>
+                            <Grid container direction='row' alignItems='baseline' justifyContent='flex-end'>
+                            <Typography style={{fontSize: 18, marginRight: 20}}>Number of billboards photographed at least once:</Typography>
+                            <Typography style={{fontSize: 22}}>{amountOfBillboards}</Typography>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
