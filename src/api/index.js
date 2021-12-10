@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const consts = require("./constants");
-const {getBillboardsPhotographed, drawPath, createGrid} = require("./utils")
+const {getBillboardsPhotographed, drawPath, createGrid, drawPathSingleDrone} = require("./utils")
 app.use(cors());
 
 app.use(express.json())
@@ -22,7 +22,7 @@ app.get('/api/get-result', (req, res) => {
     grid[consts.ORIGIN_Y][consts.ORIGIN_X].item = consts.START
 
     // Draw the path
-    result = drawPath(input, grid)
+    result = drawPathSingleDrone(input, grid)
 
     // If the input is out of bounds then return an error status code
     if(!result) return res.sendStatus(400)

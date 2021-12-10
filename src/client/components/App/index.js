@@ -1,16 +1,13 @@
-import React, {useContext} from 'react'
-import { GridArea } from '../GridArea'
-import {CssBaseline, Divider, MenuItem, TextField, Typography} from "@material-ui/core"
-import { Grid } from '@material-ui/core'
-import { useGlobalStyles } from '../../styles/Global'
-import { useApp } from './hooks/useApp'
-import { Button } from '@material-ui/core'
+import { Button, CssBaseline, Divider, Grid, TextField, Typography } from "@material-ui/core"
 import { ThemeProvider } from '@material-ui/styles'
-import {theme} from "../../styles/Theme"
-import { ErrorDialog } from './ErrorDialog'
+import React, { useContext } from 'react'
 import { CurrentPoseContext } from '../../context/CurrentPoseContext'
-import { Label } from '@material-ui/icons'
+import { useGlobalStyles } from '../../styles/Global'
+import { theme } from "../../styles/Theme"
+import { GridArea } from '../GridArea'
 import { ValidInputPanel } from '../ValidInputPanel'
+import { ErrorDialog } from './ErrorDialog'
+import { useApp } from './hooks/useApp'
 
 export const App = () => {
     // Styles
