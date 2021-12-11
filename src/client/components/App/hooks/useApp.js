@@ -1,6 +1,6 @@
-import React, {useState, useContext} from 'react'
-import {MAX_HEIGHT, MAX_WIDTH, ORIGIN_X, ORIGIN_Y, TAKE_PHOTO, UP, DOWN, LEFT, RIGHT, START} from "../../../constants"
-import { getData } from '../../../services'
+import { useState } from 'react'
+import { DOWN, LEFT, MAX_HEIGHT, MAX_WIDTH, ORIGIN_X, ORIGIN_Y, RIGHT, START, TAKE_PHOTO, UP } from "../../../constants"
+import { getDataSingleDrone } from '../../../services'
 
 export const useApp = (setFirstPose) => {
 
@@ -74,7 +74,7 @@ export const useApp = (setFirstPose) => {
         if(!sanitised) return
        
         try{
-            const res = await getData(sanitised)
+            const res = await getDataSingleDrone(sanitised)
 
             // Reset the grid before drawing the path
             setGridData(initGridData)

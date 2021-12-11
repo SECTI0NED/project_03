@@ -10,7 +10,7 @@ export const ValidInputPanel = ({handleButtonInput}) => {
                 <Grid container direction="row" justifyContent="center">
                     <Grid item ></Grid>
                     <Grid item>
-                        <Tooltip title="Up" placement="top">
+                        <Tooltip title="North" placement="top">
                             <Button style={{fontSize: 18, fontWeight: "bold"}} value="^" onClick={handleButtonInput}>
                                 {"^"}
                             </Button>
@@ -20,7 +20,7 @@ export const ValidInputPanel = ({handleButtonInput}) => {
                 </Grid>
                 <Grid container direction="row" justifyContent="center">
                     <Grid item>
-                        <Tooltip title="Left" placement='left'>
+                        <Tooltip title="West" placement='left'>
                         <Button style={{fontSize: 16, fontWeight: "bold"}} value="<" onClick={handleButtonInput}>
                             {"<"}
                         </Button>
@@ -34,7 +34,7 @@ export const ValidInputPanel = ({handleButtonInput}) => {
                         </Tooltip>
                     </Grid>
                     <Grid item>
-                        <Tooltip title='Right' placement='right'>
+                        <Tooltip title='East' placement='right'>
                         <Button style={{fontSize: 16, fontWeight: "bold"}} value=">" onClick={handleButtonInput}>
                             {">"}
                         </Button>
@@ -44,7 +44,7 @@ export const ValidInputPanel = ({handleButtonInput}) => {
                 <Grid container direction="row" justifyContent="center">
                     <Grid item></Grid>
                     <Grid item>
-                        <Tooltip title='Down' placement='bottom'>
+                        <Tooltip title='South' placement='bottom'>
                         <Button style={{fontSize: 12, fontWeight: "bold"}} value="v" onClick={handleButtonInput}>
                             {"v"}
                         </Button>

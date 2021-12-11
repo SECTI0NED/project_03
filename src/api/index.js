@@ -13,7 +13,7 @@ app.get('/api/initial-grid', (req, res) => {
     return grid
 })
 
-app.get('/api/get-result', (req, res) => {
+app.get('/api/single-drone', (req, res) => {
     // console.log(req.query)
     const input = req.query.input.split('')
     let grid = createGrid()
@@ -28,9 +28,19 @@ app.get('/api/get-result', (req, res) => {
     if(!result) return res.sendStatus(400)
 
     // Get number of billboards photographed at least once
-    const amount = getBillboardsPhotographed(result.grid)
+    const amount = getBillboardsPhotographed(grid)
     
-    return res.json({grid: result.grid, amount: amount, currentPosition: result.currentPosition, orientation: result.orientation})
+    return res.json({grid: grid, amount: amount, currentPosition: result.currentPosition, orientation: result.orientation})
 });
+
+
+app.get('/api/two-drones', (req, res) => {
+    const input = req.query.input.split('')
+    let grid = createGrid()
+
+    // Draw the starting position
+    grid[consts.ORIGIN_Y][consts.ORIGIN_X].item = consts.START
+})
+
 
 app.listen(4001, () => console.log(`Api started at http://localhost:4001`));
