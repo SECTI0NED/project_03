@@ -1,7 +1,8 @@
-import { Button, CssBaseline, Divider, Grid, TextField, Typography } from "@material-ui/core"
+import { Button, CssBaseline, Divider, Grid, TextField, Typography, Switch} from "@material-ui/core"
+import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab"
 import { ThemeProvider } from '@material-ui/styles'
 import React, { useContext } from 'react'
-import { CurrentPoseContext } from '../../context/CurrentPoseContext'
+import { DroneContext } from '../../context/DroneContext'
 import { useGlobalStyles } from '../../styles/Global'
 import { theme } from "../../styles/Theme"
 import { GridArea } from '../GridArea'
@@ -12,9 +13,9 @@ import { useApp } from './hooks/useApp'
 export const App = () => {
     // Styles
     const global = useGlobalStyles()
-    const {setFirstPose} = useContext(CurrentPoseContext)
+    const {setFirstPose} = useContext(DroneContext)
     const {handleInputChange, handleSubmit, gridData, input, amountOfBillboards, 
-        error, closeError, handleButtonInput, handleClear} = useApp(setFirstPose)
+        error, closeError, handleButtonInput, handleClear, } = useApp(setFirstPose)
    
     return (
         
@@ -28,6 +29,12 @@ export const App = () => {
                 </Grid>
                 <Grid item>
                     <Grid container direction="column" spacing={4} justifyContent="center">
+                        <Grid item>
+                            <ToggleButtonGroup>
+                                <ToggleButton>One Drone</ToggleButton>
+                                <ToggleButton>Two Drones</ToggleButton>
+                            </ToggleButtonGroup>
+                        </Grid>
                         <Grid item>
                             <ValidInputPanel handleButtonInput={handleButtonInput}/>
                         </Grid>
@@ -54,6 +61,7 @@ export const App = () => {
                             <Typography style={{fontSize: 22}}>{amountOfBillboards}</Typography>
                             </Grid>
                         </Grid>
+
                     </Grid>
                 </Grid>
                 </Grid>

@@ -1,7 +1,5 @@
-import { Grid } from '@material-ui/core'
-import {Square} from "./Square"
 import React from 'react'
-import { maxWidth } from '@material-ui/system'
+import { Square } from "./Square"
 
 export const Row = ({gridData}) => {
     const row = gridData.map((cellData => {

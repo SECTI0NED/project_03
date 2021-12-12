@@ -45,7 +45,7 @@ module.exports.drawPathSingleDrone = (input, grid) => {
         orientation = result.orientation
     }
 
-    return {currentPosition: {x: x, y: y}, orientation: orientation}
+    return {position: {x: x, y: y}, orientation: orientation}
 }
 
 /**
@@ -61,7 +61,7 @@ module.exports.drawPathTwoDrones = (input, grid) => {
     let firstY = consts.ORIGIN_Y
     let secondY= consts.ORIGIN_Y
 
-    // Draw the first drone path
+    // Draw the first drone's path
     for(let i = 0; i < input.length; i+=2){
         const result = drawPath(input[i], grid, firstX, firstY, firstOrient)
         if (!result) return
@@ -69,7 +69,7 @@ module.exports.drawPathTwoDrones = (input, grid) => {
         firstY = result.y
         firstOrient = result.orientation
     }
-
+    // Draw the second drone's path
     for(let i = 1; i < input.length; i+=2){
         const result = drawPath(input[i], grid, secondX, secondY, secondOrient)
         if (!result) return
@@ -78,7 +78,7 @@ module.exports.drawPathTwoDrones = (input, grid) => {
         secondOrient = result.orientation
     }
 
-    return {firstDronePose: {x: firstX, y: firstY, orientation: firstOrient}, secondDronePose: {x: secondX, y: secondY, orientation: secondOrient}}
+    return {firstDronePose: {position: {x: firstX, y: firstY} , orientation: firstOrient}, secondDronePose: { position: {x: secondX, y: secondY} , orientation: secondOrient}}
 }
 
 

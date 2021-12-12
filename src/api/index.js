@@ -30,7 +30,7 @@ app.get('/api/single-drone', (req, res) => {
     // Get number of billboards photographed at least once
     const amount = getBillboardsPhotographed(grid)
     
-    return res.json({grid: grid, amount: amount, currentPosition: result.currentPosition, orientation: result.orientation})
+    return res.json({grid: grid, amount: amount, pose: { position: result.position, orientation: result.orientation} })
 });
 
 
@@ -40,6 +40,18 @@ app.get('/api/two-drones', (req, res) => {
 
     // Draw the starting position
     grid[consts.ORIGIN_Y][consts.ORIGIN_X].item = consts.START
+
+    // Draw the path
+    result = drawPathTwoDrones(input, grid)
+
+    // If the input is out of bounds then return an error status code
+    if(!result) return res.sendStatus(400)
+
+    // Get number of billboards photographed at least once
+    const amount = getBillboardsPhotographed(grid)
+
+    return res.json({grid:grid, amount: amount, firstDronePose: result.firstDronePose, secondDronePose: result.secondDronePose})
+
 })
 
 

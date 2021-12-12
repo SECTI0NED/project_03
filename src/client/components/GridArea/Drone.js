@@ -1,7 +1,5 @@
-import { useContext } from 'react';
 import FlightIcon from '@material-ui/icons/Flight';
-import { CurrentPoseContext } from "../../context/CurrentPoseContext";
-import {UP, RIGHT, DOWN, LEFT} from "../../constants"
+import { DOWN, LEFT, RIGHT, UP } from "../../constants";
 import { useStyles } from './styles';
 export const Drone = ({pose}) => {
     const classes = useStyles()

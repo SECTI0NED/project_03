@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {App} from "./components/App"
-import { CurrentPoseProvider } from "./context/CurrentPoseContext"
+import { App } from "./components/App";
+import { DroneProvider } from './context/DroneContext';
 
 ReactDOM.render(
-    <CurrentPoseProvider>
+    <DroneProvider>
         <App />
-    </CurrentPoseProvider>, 
+    </DroneProvider>, 
 document.getElementById('app'));

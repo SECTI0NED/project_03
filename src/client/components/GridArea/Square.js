@@ -1,12 +1,12 @@
 
-import {TAKE_PHOTO, PATH, START, UP, RIGHT, DOWN, LEFT} from "../../constants"
-import React, {useContext} from 'react'
-import { useStyles } from "./styles"
 import { Tooltip } from "@material-ui/core";
-import { CurrentPoseContext } from "../../context/CurrentPoseContext";
+import React, { useContext } from 'react';
+import { PATH, START, TAKE_PHOTO } from "../../constants";
+import { DroneContext } from "../../context/DroneContext";
 import { Drone } from "./Drone";
+import { useStyles } from "./styles";
 export const Square = ({gridData}) => {
-    const {firstPose} = useContext(CurrentPoseContext)
+    const {firstPose} = useContext(DroneContext)
     const classes = useStyles()
  
     return (

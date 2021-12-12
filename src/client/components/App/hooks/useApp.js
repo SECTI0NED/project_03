@@ -83,7 +83,7 @@ export const useApp = (setFirstPose) => {
             setGridData(res.data.grid)
 
             setAmountOfBillboards(res.data.amount)
-            setFirstPose({position: res.data.currentPosition, orientation: res.data.orientation})
+            setFirstPose({position: res.data.pose.position, orientation: res.data.pose.orientation})
             setGridDataCopy(res.data.grid)
             setInputCopy(input)
 
