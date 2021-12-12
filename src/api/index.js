@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const consts = require("./constants");
-const {getBillboardsPhotographed, drawPath, createGrid, drawPathSingleDrone} = require("./utils")
+const {getBillboardsPhotographed, drawPathTwoDrones, createGrid, drawPathSingleDrone} = require("./utils")
 app.use(cors());
 
 app.use(express.json())

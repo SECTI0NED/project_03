@@ -13,12 +13,11 @@ import { useApp } from './hooks/useApp'
 export const App = () => {
     // Styles
     const global = useGlobalStyles()
-    const {setFirstPose} = useContext(DroneContext)
+    const {setFirstPose, setSecondPose, setNumberOfDrones, numberOfDrones} = useContext(DroneContext)
     const {handleInputChange, handleSubmit, gridData, input, amountOfBillboards, 
-        error, closeError, handleButtonInput, handleClear, } = useApp(setFirstPose)
+        error, closeError, handleButtonInput, handleClear, toggleNumberOfDrones} = useApp(setFirstPose, setSecondPose, setNumberOfDrones, numberOfDrones)
    
     return (
-        
             <ThemeProvider theme={theme}>
             <CssBaseline />
             <div style={{padding: 50}}> 
@@ -30,9 +29,9 @@ export const App = () => {
                 <Grid item>
                     <Grid container direction="column" spacing={4} justifyContent="center">
                         <Grid item>
-                            <ToggleButtonGroup>
-                                <ToggleButton>One Drone</ToggleButton>
-                                <ToggleButton>Two Drones</ToggleButton>
+                            <ToggleButtonGroup value={numberOfDrones} onChange={toggleNumberOfDrones} exclusive>
+                                <ToggleButton value={1}>Single Drone</ToggleButton>
+                                <ToggleButton value={2}>Two Drones</ToggleButton>
                             </ToggleButtonGroup>
                         </Grid>
                         <Grid item>

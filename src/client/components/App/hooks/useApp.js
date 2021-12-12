@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { DOWN, LEFT, MAX_HEIGHT, MAX_WIDTH, ORIGIN_X, ORIGIN_Y, RIGHT, START, TAKE_PHOTO, UP } from "../../../constants"
-import { getDataSingleDrone } from '../../../services'
+import { getDataSingleDrone, getDataTwoDrones } from '../../../services'
 
-export const useApp = (setFirstPose) => {
+export const useApp = (setFirstPose, setSecondPose, setNumberOfDrones, numberOfDrones) => {
 
     // Grid Data
     const initGridData = () => {
@@ -74,16 +74,34 @@ export const useApp = (setFirstPose) => {
         if(!sanitised) return
        
         try{
-            const res = await getDataSingleDrone(sanitised)
-
+            console.log("Number of drones", numberOfDrones)
+            // return
+            let res
+            if(numberOfDrones === 1) {
+                res = await getDataSingleDrone(sanitised)
+            } else if(numberOfDrones === 2) {
+                res = await getDataTwoDrones(sanitised)
+            }
+        
             // Reset the grid before drawing the path
             setGridData(initGridData)
 
             // Draw the path
             setGridData(res.data.grid)
 
+            // Get the amount of billboards photographed
             setAmountOfBillboards(res.data.amount)
-            setFirstPose({position: res.data.pose.position, orientation: res.data.pose.orientation})
+
+            // Set the pose
+            if(numberOfDrones === 1){
+                setFirstPose({position: res.data.pose.position, orientation: res.data.pose.orientation})
+            } else if(numberOfDrones === 2){
+                setFirstPose({position: res.data.firstDronePose.position, orientation: res.data.firstDronePose.orientation})
+                setSecondPose({position: res.data.secondDronePose.position, orientation: res.data.secondDronePose.orientation})
+                // console.log(res.data)
+            }
+
+            // Create a copy of the grid and input data for error handling
             setGridDataCopy(res.data.grid)
             setInputCopy(input)
 
@@ -97,5 +115,9 @@ export const useApp = (setFirstPose) => {
         }
     }
 
-    return {handleInputChange, handleSubmit, gridData, input, error, closeError, amountOfBillboards, handleButtonInput, handleClear}
+    const toggleNumberOfDrones = (event, value) => {
+        setNumberOfDrones(value)
+    }
+
+    return {handleInputChange, handleSubmit, gridData, input, error, closeError, amountOfBillboards, handleButtonInput, handleClear, toggleNumberOfDrones}
 }
