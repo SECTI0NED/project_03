@@ -9,7 +9,7 @@ module.exports.createGrid = () => {
     }
     for(let row = 0; row < grid.length; row++){
         for(let col = 0; col < grid[row].length; col++){
-            grid[row][col] = {key: {x: col, y: row}, item: consts.EMPTY}
+            grid[row][col] = {key: {x: col, y: row}, item: consts.EMPTY, drone: ""}
         }
     }
     return grid
@@ -38,7 +38,7 @@ module.exports.drawPathSingleDrone = (input, grid) => {
     let x = consts.ORIGIN_X
     let y = consts.ORIGIN_Y
     for(let i = 0; i < input.length; i++){
-        const result = drawPath(input[i], grid, x, y, orientation)
+        const result = drawPath(input[i], grid, x, y, orientation, consts.DRONE_01)
         if (!result) return
         x = result.x
         y = result.y
@@ -54,6 +54,8 @@ module.exports.drawPathSingleDrone = (input, grid) => {
  * @param {*} grid 
  */
 module.exports.drawPathTwoDrones = (input, grid) => {
+    const seperateDroneData = getSeperateDroneData(input, grid)
+
     firstOrient = consts.UP
     secondOrient = consts.UP
     let firstX = consts.ORIGIN_X
@@ -63,22 +65,67 @@ module.exports.drawPathTwoDrones = (input, grid) => {
 
     // Draw the first drone's path
     for(let i = 0; i < input.length; i+=2){
-        const result = drawPath(input[i], grid, firstX, firstY, firstOrient)
+        const result = drawPath(input[i], grid, firstX, firstY, firstOrient, consts.DRONE_01)
         if (!result) return
         firstX = result.x
         firstY = result.y
         firstOrient = result.orientation
     }
+  
     // Draw the second drone's path
     for(let i = 1; i < input.length; i+=2){
-        const result = drawPath(input[i], grid, secondX, secondY, secondOrient)
+        const result = drawPath(input[i], grid, secondX, secondY, secondOrient, consts.DRONE_02)
         if (!result) return
         secondX = result.x
         secondY = result.y
         secondOrient = result.orientation
     }
 
-    return {firstDronePose: {position: {x: firstX, y: firstY} , orientation: firstOrient}, secondDronePose: { position: {x: secondX, y: secondY} , orientation: secondOrient}}
+    return {
+        firstDrone: {
+                position: {x: firstX, y: firstY}, 
+                orientation: firstOrient, 
+                grid: seperateDroneData.firstDroneGridData
+            }, 
+        secondDrone: {
+                position: {x: secondX, y: secondY}, 
+                orientation: secondOrient, 
+                grid: seperateDroneData.secondDroneGridData
+            },
+    }
+}
+
+/**
+ * Draws the path of each drone seperately.
+ * @param {*} input 
+ * @param {*} grid 
+ * @returns Two grids, one possessing the first drone's data, and the other possessing the second drone's data
+ */
+const getSeperateDroneData = (input, grid) => {
+
+    let firstDroneGridData = grid
+    let secondDroneGridData = grid
+    let firstX = consts.ORIGIN_X
+    let secondX = consts.ORIGIN_X
+    let firstY = consts.ORIGIN_Y
+    let secondY= consts.ORIGIN_Y
+
+    // Draw the first drone's path
+    for(let i = 0; i < input.length; i+=2){
+        const result = drawPath(input[i], firstDroneGridData, firstX, firstY, firstOrient, consts.DRONE_01)
+        if (!result) return
+        firstX = result.x
+        firstY = result.y
+    }
+  
+    // Draw the second drone's path
+    for(let i = 1; i < input.length; i+=2){
+        const result = drawPath(input[i], secondDroneGridData, secondX, secondY, secondOrient, consts.DRONE_02)
+        if (!result) return
+        secondX = result.x
+        secondY = result.y
+    }
+    return { firstDroneGridData: firstDroneGridData, secondDroneGridData: secondDroneGridData} 
 }
 
 
@@ -91,13 +138,15 @@ module.exports.drawPathTwoDrones = (input, grid) => {
  * @param {*} orientation The current orientation
  * @returns  The next pose (position + orientation)
  */
-const drawPath = (inputChar, grid, x, y, orientation) => {
+const drawPath = (inputChar, grid, x, y, orientation, droneId) => {
     if(inputChar === consts.UP){
         y -= 1
         if(outOfBounds(x, y)) return
         orientation = consts.UP
         if(grid[y][x].item === consts.EMPTY){
             grid[y][x].item = consts.PATH
+            grid[y][x].drone = droneId
+
         }
     } else if(inputChar === consts.RIGHT){
         x += 1
@@ -105,6 +154,7 @@ const drawPath = (inputChar, grid, x, y, orientation) => {
         orientation = consts.RIGHT
         if(grid[y][x].item === consts.EMPTY){
             grid[y][x].item = consts.PATH
+            grid[y][x].drone = droneId
         }
     } else if(inputChar === consts.DOWN) {
         y += 1
@@ -112,6 +162,7 @@ const drawPath = (inputChar, grid, x, y, orientation) => {
         orientation = consts.DOWN
         if(grid[y][x].item === consts.EMPTY){
             grid[y][x].item = consts.PATH
+            grid[y][x].drone = droneId
         }
 
     } else if(inputChar === consts.LEFT) {
@@ -120,9 +171,11 @@ const drawPath = (inputChar, grid, x, y, orientation) => {
         orientation = consts.LEFT
         if(grid[y][x].item === consts.EMPTY){
             grid[y][x].item = consts.PATH
+            grid[y][x].drone = droneId
         }
     } else if(inputChar === consts.TAKE_PHOTO) {
         grid[y][x].item = consts.TAKE_PHOTO
+        grid[y][x].drone = droneId
     }
     return {x: x, y: y, orientation: orientation}
 }

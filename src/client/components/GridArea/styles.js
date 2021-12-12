@@ -8,7 +8,7 @@ export const useStyles = makeStyles(() => ({
         width: 40,
     },
     start: {
-        backgroundColor: "#a8a8a8",
+        backgroundColor: "rgba(219, 219, 219, 0.25)",
         height: 38,
         width: 38,
     },
@@ -17,26 +17,33 @@ export const useStyles = makeStyles(() => ({
             backgroundColor: "rgba(0,0,0,0.0)"
         },
         to: {
-            backgroundColor: "#3271a8"
+            backgroundColor: "rgba(80, 133, 199, 0.8)"
         },
     },
     path: {
-        backgroundColor: "#3271a8",
+        backgroundColor: "rgba(80, 133, 199, 0.8)",
         height: 38,
         width: 38,
         animationName: "$path",
         animationDuration: "1s",
     },
+
+    
+    secondDronePath: {
+        backgroundColor: "rgba(217, 80, 80, 1.0)"
+    },
+
+
     "@keyframes photo": {
         from: {
             backgroundColor: "rgba(0,0,0,0.0)",
         },
         to: {
-            backgroundColor: "#2554a1",
+            backgroundColor: "rgba(54, 107, 194, 0.8)",
         },
     },
     photographed: {
-        backgroundColor: "#2554a1",
+        backgroundColor: "rgba(54, 107, 194, 0.8)",
         height: 38,
         width: 38,
         animationName: "$photo",
@@ -47,10 +54,11 @@ export const useStyles = makeStyles(() => ({
             color: "rgba(0,0,0,0.0)"
         },
         to: {
-            color: "white"
+            color: "#cff0ff"
         }
     },
     drone: {
+        color: "#cff0ff",
         fontSize: 38, 
         textAlign: "center",
         animationName: "$drone",
