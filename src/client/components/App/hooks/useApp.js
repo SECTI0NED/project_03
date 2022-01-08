@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { DOWN, LEFT, MAX_HEIGHT, MAX_WIDTH, ORIGIN_X, ORIGIN_Y, RIGHT, START, TAKE_PHOTO, UP } from "../../../constants"
 import { getDataSingleDrone, getDataTwoDrones } from '../../../services'
 
-export const useApp = (setFirstPose, setSecondPose, setNumberOfDrones, numberOfDrones) => {
+export const useApp = (setFirstPose, setSecondPose, numberOfDrones, setFirstDroneGrid, setSecondDroneGrid) => {
 
     // Grid Data
     const initGridData = () => {
@@ -21,8 +21,12 @@ export const useApp = (setFirstPose, setSecondPose, setNumberOfDrones, numberOfD
         return grid
     }
 
-    // Data
+    // Grid Data to be displayed
     const [gridData, setGridData] = useState(initGridData)
+
+    // All Grid data
+    const [allGridData, setAllGridData] = useState({both: initGridData, first: initGridData, second: initGridData})
+
     const [amountOfBillboards, setAmountOfBillboards] = useState(0)
     
 
@@ -95,9 +99,10 @@ export const useApp = (setFirstPose, setSecondPose, setNumberOfDrones, numberOfD
             // Set the pose
             if(numberOfDrones === 1){
                 setFirstPose({position: res.data.pose.position, orientation: res.data.pose.orientation})
-            } else if(numberOfDrones === 2){
-                setFirstPose({position: res.data.firstDronePose.position, orientation: res.data.firstDronePose.orientation})
-                setSecondPose({position: res.data.secondDronePose.position, orientation: res.data.secondDronePose.orientation})
+            }else if(numberOfDrones === 2){
+                setFirstPose({position: res.data.firstDrone.position, orientation: res.data.firstDrone.orientation})
+                setSecondPose({position: res.data.secondDrone.position, orientation: res.data.secondDrone.orientation})
+                setAllGridData({both: res.data.grid, first: res.data.firstDrone.grid, second: res.data.secondDrone.grid})
                 // console.log(res.data)
             }
 
@@ -115,9 +120,23 @@ export const useApp = (setFirstPose, setSecondPose, setNumberOfDrones, numberOfD
         }
     }
 
-    const toggleNumberOfDrones = (event, value) => {
-        setNumberOfDrones(value)
-    }
+    const [gridDataType, setGridDataType] = useState("both")
+    const toggleGridDataType = (event, value) => {
 
-    return {handleInputChange, handleSubmit, gridData, input, error, closeError, amountOfBillboards, handleButtonInput, handleClear, toggleNumberOfDrones}
+        setGridDataType(value)
+
+        // Does state change right away?
+
+
+        if(gridDataType !== 'both') {
+            setGridData(allGridData.both)    
+        } else if(gridDataType !== 'first'){
+            setGridData(allGridData.first)
+        }
+        
+    }
+    return {handleInputChange, handleSubmit, gridData, input, error, closeError, amountOfBillboards, 
+        handleButtonInput, handleClear, gridDataType,
+        toggleGridDataType}
+
 }

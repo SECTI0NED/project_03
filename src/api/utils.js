@@ -52,6 +52,10 @@ module.exports.drawPathSingleDrone = (input, grid) => {
  * 
  * @param {*} input 
  * @param {*} grid 
+ * @returns Both the data belonging to each drone. For each drone it returns:
+ * - its position
+ * - its orientation
+ * - the grid with its path and places it photographed
  */
 module.exports.drawPathTwoDrones = (input, grid) => {
     const seperateDroneData = getSeperateDroneData(input, grid)
@@ -105,6 +109,8 @@ const getSeperateDroneData = (input, grid) => {
 
     let firstDroneGridData = grid
     let secondDroneGridData = grid
+    firstOrient = consts.UP
+    secondOrient = consts.UP
     let firstX = consts.ORIGIN_X
     let secondX = consts.ORIGIN_X
     let firstY = consts.ORIGIN_Y

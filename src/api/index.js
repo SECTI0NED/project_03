@@ -50,7 +50,7 @@ app.get('/api/two-drones', (req, res) => {
     // Get number of billboards photographed at least once
     const amount = getBillboardsPhotographed(grid)
 
-    return res.json({grid:grid, amount: amount, firstDronePose: result.firstDronePose, secondDronePose: result.secondDronePose})
+    return res.json({grid: grid, amount: amount, firstDrone: result.firstDrone, secondDrone: result.secondDrone})
 
 })
 
