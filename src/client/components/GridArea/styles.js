@@ -12,7 +12,7 @@ export const useStyles = makeStyles(() => ({
         height: 38,
         width: 38,
     },
-    "@keyframes path": {
+    "@keyframes firstpath": {
         from: {
             backgroundColor: "rgba(0,0,0,0.0)"
         },
@@ -20,11 +20,27 @@ export const useStyles = makeStyles(() => ({
             backgroundColor: "rgba(80, 133, 199, 0.8)"
         },
     },
-    path: {
+    firstpath: {
         backgroundColor: "rgba(80, 133, 199, 0.8)",
         height: 38,
         width: 38,
-        animationName: "$path",
+        animationName: "$firstpath",
+        animationDuration: "1s",
+    },
+
+    "@keyframes secondpath": {
+        from: {
+            backgroundColor: "rgba(0,0,0,0.0)"
+        },
+        to: {
+            backgroundColor: "rgba(199, 66, 92, 0.8)"
+        },
+    },
+    secondpath: {
+        backgroundColor: "rgba(199, 66, 92, 0.8)",
+        height: 38,
+        width: 38,
+        animationName: "$secondpath",
         animationDuration: "1s",
     },
 
@@ -32,6 +48,7 @@ export const useStyles = makeStyles(() => ({
     secondDronePath: {
         backgroundColor: "rgba(217, 80, 80, 1.0)"
     },
+
 
 
     "@keyframes photo": {
@@ -49,6 +66,23 @@ export const useStyles = makeStyles(() => ({
         animationName: "$photo",
         animationDuration: "1s",
     },
+
+    "@keyframes secondPhoto": {
+        from: {
+            backgroundColor: "rgba(0,0,0,0.0)",
+        },
+        to: {
+            backgroundColor: "rgba(173, 43, 69, 0.8)",
+        },
+    },
+    secondPhotographed: {
+        backgroundColor: "rgba(173, 43, 69, 0.8)",
+        height: 38,
+        width: 38,
+        animationName: "$secondPhoto",
+        animationDuration: "1s",
+    },
+
     "@keyframes drone": {
         from: {
             color: "rgba(0,0,0,0.0)"

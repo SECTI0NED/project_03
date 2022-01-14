@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { DOWN, LEFT, MAX_HEIGHT, MAX_WIDTH, ORIGIN_X, ORIGIN_Y, RIGHT, START, TAKE_PHOTO, UP } from "../../../constants"
 import { getDataSingleDrone, getDataTwoDrones } from '../../../services'
 
-export const useApp = (setFirstPose, setSecondPose, numberOfDrones, setFirstDroneGrid, setSecondDroneGrid) => {
+export const useApp = (setFirstPose, setSecondPose, setNumberOfDrones, numberOfDrones, gridDataType, setGridDataType) => {
 
     // Grid Data
     const initGridData = () => {
@@ -106,6 +106,8 @@ export const useApp = (setFirstPose, setSecondPose, numberOfDrones, setFirstDron
                 // console.log(res.data)
             }
 
+            console.log(res.data.firstDrone.grid)
+
             // Create a copy of the grid and input data for error handling
             setGridDataCopy(res.data.grid)
             setInputCopy(input)
@@ -120,23 +122,23 @@ export const useApp = (setFirstPose, setSecondPose, numberOfDrones, setFirstDron
         }
     }
 
-    const [gridDataType, setGridDataType] = useState("both")
-    const toggleGridDataType = (event, value) => {
+    const toggleNumberOfDrones = (event, value) => {
+        setNumberOfDrones(value)
+    }
 
+    const toggleGridDataType = (event, value) => {
         setGridDataType(value)
 
-        // Does state change right away?
-
-
-        if(gridDataType !== 'both') {
+        if(gridDataType !== 'both' && value === 'both') {
             setGridData(allGridData.both)    
-        } else if(gridDataType !== 'first'){
+        } else if(gridDataType !== 'first' && value === 'first'){
             setGridData(allGridData.first)
+        } else if(gridDataType !== 'second' && value === 'second'){
+            setGridData(allGridData.second)
         }
         
     }
     return {handleInputChange, handleSubmit, gridData, input, error, closeError, amountOfBillboards, 
-        handleButtonInput, handleClear, gridDataType,
-        toggleGridDataType}
+        handleButtonInput, handleClear, gridDataType, toggleNumberOfDrones, toggleGridDataType}
 
 }

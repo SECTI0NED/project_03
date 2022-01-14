@@ -1,6 +1,7 @@
 const { ContactSupportOutlined } = require("@material-ui/icons");
 const { MAX_WIDTH } = require("./constants");
 const consts = require("./constants");
+const _ = require('lodash')
 
 module.exports.createGrid = () => {
     let grid = new Array(consts.MAX_HEIGHT)
@@ -107,8 +108,8 @@ module.exports.drawPathTwoDrones = (input, grid) => {
  */
 const getSeperateDroneData = (input, grid) => {
 
-    let firstDroneGridData = grid
-    let secondDroneGridData = grid
+    let firstDroneGridData = _.cloneDeep(grid)
+    let secondDroneGridData = _.cloneDeep(grid)
     firstOrient = consts.UP
     secondOrient = consts.UP
     let firstX = consts.ORIGIN_X

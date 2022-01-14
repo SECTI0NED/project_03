@@ -13,9 +13,9 @@ import { useApp } from './hooks/useApp'
 export const App = () => {
     // Styles
     const global = useGlobalStyles()
-    const {setFirstPose, setSecondPose, setNumberOfDrones, numberOfDrones, setFirstDroneGrid, setSecondDroneGrid} = useContext(DroneContext)
-    const {handleInputChange, handleSubmit, gridData, firstDroneGridData, secondDroneGridData, input, amountOfBillboards, 
-        error, closeError, handleButtonInput, handleClear, toggleNumberOfDrones, gridDataType, toggleGridDataType} = useApp(setFirstPose, setSecondPose, setNumberOfDrones, numberOfDrones, setFirstDroneGrid, setSecondDroneGrid)
+    const {setFirstPose, setSecondPose, setNumberOfDrones, numberOfDrones, gridDataType, setGridDataType} = useContext(DroneContext)
+    const {handleInputChange, handleSubmit, gridData, input, amountOfBillboards, error, closeError, 
+        handleButtonInput, handleClear, toggleNumberOfDrones, toggleGridDataType} = useApp(setFirstPose, setSecondPose, setNumberOfDrones, numberOfDrones, gridDataType, setGridDataType)
    
     return (
             <ThemeProvider theme={theme}>
@@ -54,13 +54,19 @@ export const App = () => {
                                 </Grid>
                             </Grid>
                             <Divider />
-                            <Grid item>
-                                <ToggleButtonGroup value={gridDataType} onChange={toggleGridDataType}>
-                                    <ToggleButton value={"both"}>Both Drones</ToggleButton>
+                            {
+                                numberOfDrones === 2
+                                ?
+                                <Grid item>
+                                <ToggleButtonGroup value={gridDataType} onChange={toggleGridDataType} exclusive>
                                     <ToggleButton value={"first"}>First Drone</ToggleButton>
+                                    <ToggleButton value={"both"}>Both Drones</ToggleButton>
                                     <ToggleButton value={"second"}>Second Drone</ToggleButton>  
                                 </ToggleButtonGroup>
-                            </Grid>
+                                </Grid>
+                                :
+                                <></>
+                            }
                             <Grid item>
                                 <Grid container direction='row' alignItems='baseline' justifyContent='flex-end'>
                                 <Typography style={{fontSize: 18, marginRight: 20}}>Number of billboards photographed at least once:</Typography>

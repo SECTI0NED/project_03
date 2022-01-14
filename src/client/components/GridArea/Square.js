@@ -4,10 +4,11 @@ import React, { useContext } from 'react';
 import { PATH, START, TAKE_PHOTO } from "../../constants";
 import { DroneContext } from "../../context/DroneContext";
 import { Drone } from "./Drone";
+import { SquareData } from "./SquareData";
 import { useStyles } from "./styles";
 
 export const Square = ({gridData}) => {
-    const {firstPose} = useContext(DroneContext)
+    const {firstPose, secondPose, gridDataType} = useContext(DroneContext)
     const classes = useStyles()
  
     return (
@@ -15,51 +16,38 @@ export const Square = ({gridData}) => {
         <Tooltip title={gridData.item !== START && gridData.item !== TAKE_PHOTO ? `(${gridData.key.x}, ${gridData.key.y})`: ""}>
         <div className={classes.square}>
             {
-                gridData.item === PATH
+                gridDataType === 'first'
                 ?
-                <div className={classes.path}>
-                    {
-                        gridData.key.x === firstPose.position.x && gridData.key.y === firstPose.position.y
-                        ?
-                        <Drone pose={firstPose}/>
-                        :
-                        <></>
-                    }
-                </div>
+                <SquareData 
+                    gridData={gridData} 
+                    pathColor={classes.firstpath} 
+                    photographedColor={classes.photographed} 
+                    pose={firstPose}
+                />
                 :
                 <></>
             }
             {
-                gridData.item === TAKE_PHOTO
+                gridDataType === 'second'
                 ?
-                <Tooltip title={`Photographed (${gridData.key.x}, ${gridData.key.y})`}>
-                <div className={classes.photographed}>
-                    {
-                        gridData.key.x === firstPose.position.x && gridData.key.y === firstPose.position.y
-                        ?
-                        <Drone pose={firstPose}/>
-                        :
-                        <></>
-                    }
-                </div>
-                </Tooltip>
+                <SquareData 
+                    gridData={gridData} 
+                    pathColor={classes.secondpath} 
+                    photographedColor={classes.secondPhotographed} 
+                    pose={secondPose}
+                />
                 :
                 <></>
             }
             {
-                gridData.item === START
+                gridDataType === 'both'
                 ?
-                <Tooltip title={`Start (${gridData.key.x}, ${gridData.key.y})`}>
-                <div className={classes.start}>
-                    {
-                        gridData.key.x === firstPose.position.x && gridData.key.y === firstPose.position.y
-                        ?
-                        <Drone pose={firstPose}/>
-                        :
-                        <></>
-                    }
-                </div>
-                </Tooltip>
+                    <SquareData 
+                    gridData={gridData} 
+                    pathColor={classes.path} 
+                    photographedColor={classes.photographed} 
+                    pose={firstPose}
+                />
                 :
                 <></>
             }
